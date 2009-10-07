@@ -1,0 +1,7 @@
+maxwidth = 14
+maxheight = 20
+x = -3
+y = -5
+oldfont = 0
+fcols = 0
+frows = 0

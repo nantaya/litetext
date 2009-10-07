@@ -1,0 +1,29 @@
+<project default="jar">
+
+    <target name="clean">
+        <delete dir="build"/>
+    </target>
+
+    <target name="init">
+        <mkdir dir="build/jar"/>
+        <mkdir dir="build/classes"/>
+    </target>
+
+    <target name="compile" depends="init">
+        <javac srcdir="src" destdir="build/classes"/>
+    </target>
+
+    <target name="resources">
+       <copy todir="build/classes">
+                        <fileset dir="resources">
+                                <include name="**/*" />
+                        </fileset>
+                </copy>        
+    </target>
+
+    <target name="jar" depends="compile, resources">
+        <jar destfile="build/litetext.jar" basedir="build/classes"/>
+    </target>
+
+</project>
+

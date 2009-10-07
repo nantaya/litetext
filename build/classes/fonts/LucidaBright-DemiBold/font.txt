@@ -1,0 +1,7 @@
+maxwidth = 44
+maxheight = 28
+x = -15
+y = -5
+oldfont = 0
+fcols = 0
+frows = 0

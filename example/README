@@ -1,0 +1,5 @@
+This servelet can be installed on Google App Engine to demonstrate
+the litetext text rendering utility.
+
+Set up the servelet in your appspot project and use the 
+litetextdemo.html form to invoke it.
