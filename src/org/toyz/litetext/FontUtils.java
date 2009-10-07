@@ -38,6 +38,8 @@ public class FontUtils {
 	private int cols;
 	private int rows;
 	
+	private int[][] gradient = null;
+	
     // Returns the contents of the file in a byte array.
     public static byte[] getBytesFromFile(File file) throws IOException {
         InputStream is = new FileInputStream(file);
@@ -441,7 +443,15 @@ public class FontUtils {
 	public int getRows() {
 		return rows;	
 	}
-	
+
+	public void setGradient(int[][] gradient) {
+		this.gradient = gradient;
+	}
+
+	public int[][] getGradient() {
+		return gradient;
+	}
+
 	public byte[] doRender(String inputText, String fontname)
 			throws IOException {
         int info_len = 40;
@@ -481,11 +491,23 @@ public class FontUtils {
 
         pad_width = (byte_width+3) & ~3;
         bmp_len = pad_width * height;
-                
-        byte[] bmp_data = new byte[(int)bmp_len];
-        for (int i = 0; i < bmp_len; i++) {
-        	bmp_data[i] = (byte) 255;
-        }
+            
+		byte[] bmp_data = new byte[(int) bmp_len];
+
+		for (int i = 0; i < bmp_len; i++) {
+			bmp_data[i] = (byte) 255;
+		}
+		if (gradient != null) {
+			int n = gradient.length;
+			for (int i = 0; i < rows; i++) {
+				for (int j = 0; j < width; j++) {
+					int p = i * pad_width + j * 3;
+					bmp_data[p++] = (byte) gradient[i * n / rows][0];
+					bmp_data[p++] = (byte) gradient[i * n / rows][1];
+					bmp_data[p] = (byte) gradient[i * n / rows][2];
+				}
+			}
+		}
        /* log.info("width: " + width + " height: " + height +
         		" pad_width: " + pad_width + " bmp_len: " + bmp_len);
         		*/
@@ -569,4 +591,5 @@ public class FontUtils {
 	public byte[] doRender(String inputText) throws IOException {
 		return doRender(inputText, "default");
 	}
+
 }
