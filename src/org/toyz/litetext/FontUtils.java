@@ -504,8 +504,8 @@ public class FontUtils {
         this.cols = 2 * hmargin + maxwidth;
         //log.info("image width computed: " + cols);
 
-        height = rows+40;
-        width = cols+40;
+        height = rows+4;
+        width = cols+4;
         byte_width = width * 3;
 
         pad_width = (byte_width+3) & ~3;
@@ -518,12 +518,12 @@ public class FontUtils {
 		}
 		if (gradient != null) {
 			int n = gradient.length;
-			for (int i = 0; i < rows; i++) {
+			for (int i = 0; i < height; i++) {
 				for (int j = 0; j < width; j++) {
 					int p = i * pad_width + j * 3;
-					bmp_data[p++] = (byte) gradient[i * n / rows][0];
-					bmp_data[p++] = (byte) gradient[i * n / rows][1];
-					bmp_data[p] = (byte) gradient[i * n / rows][2];
+					bmp_data[p++] = (byte) gradient[i * n / height][0];
+					bmp_data[p++] = (byte) gradient[i * n / height][1];
+					bmp_data[p] = (byte) gradient[i * n / height][2];
 				}
 			}
 		}
