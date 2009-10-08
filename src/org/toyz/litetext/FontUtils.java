@@ -10,6 +10,10 @@ import java.util.Enumeration;
 import java.util.Properties;
 import java.util.Vector;
 
+import org.toyz.litetext.Font;
+import org.toyz.litetext.Glyph;
+
+
 /* Derived from pbmtext.c - render text into a bitmap
 **
 ** Copyright (C) 1991 by Jef Poskanzer.
@@ -39,6 +43,7 @@ public class FontUtils {
 	private int rows;
 	
 	private int[][] gradient = null;
+	private int[] fgcolor = null;
 	
     // Returns the contents of the file in a byte array.
     public static byte[] getBytesFromFile(File file) throws IOException {
@@ -296,9 +301,9 @@ public class FontUtils {
 		            		return;
 		            		
 		            	}
-		                bits[basep] = 0; /* Black #000000 */
-		                bits[basep+1] = 0;
-		                bits[basep+2] = 0;
+		                bits[basep] = (byte)fgcolor[0];
+		                bits[basep+1] = (byte)fgcolor[1];
+		                bits[basep+2] = (byte)fgcolor[2];
 
 		            }
 		        }
@@ -452,6 +457,14 @@ public class FontUtils {
 		return gradient;
 	}
 
+	public void setFgcolor(int[] fgcolor) {
+		this.fgcolor = fgcolor;
+	}
+
+	public int[] getFgcolor() {
+		return fgcolor;
+	}
+
 	public byte[] doRender(String inputText, String fontname)
 			throws IOException {
         int info_len = 40;
@@ -465,6 +478,12 @@ public class FontUtils {
         }
         //log.info("loading font " + fontname);
 
+        if (fgcolor == null) {
+        	this.fgcolor = new int[3];
+        	this.fgcolor[0] = 0;	// #000000 Black
+        	this.fgcolor[1] = 0;
+        	this.fgcolor[2] = 0;
+        }
         Font font;
 		font = loadfont(fontname);
 		if (font == null) {
