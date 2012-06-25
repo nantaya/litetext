@@ -465,7 +465,7 @@ public class FontUtils {
 		return fgcolor;
 	}
 
-	public byte[] doRender(String inputText, String fontname)
+	public synchronized byte[] doRender(String inputText, String fontname)
 			throws IOException {
         int info_len = 40;
         int header_len = 14;
