@@ -4,6 +4,12 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Bitmap Font object
+ * 
+ * @author David Beckemeyer
+ *
+ */
 public class Font implements Serializable {
 
 	private static final long serialVersionUID = -2114235063206424377L;

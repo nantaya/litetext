@@ -26,7 +26,16 @@ import org.toyz.litetext.Glyph;
 ** implied warranty.
 */
 
-
+/**
+ * Provides a simple text rendering capability
+ * <p>
+ * byte[] bmp_data = doRender("Render this text into a bitmap");
+ * <p>
+ * bmp_data contains a BMP file
+ *
+ * @author David Beckemeyer
+ * @see LiteTextServlet
+ */
 public class FontUtils {
 	
 	private int maxwidth;
@@ -45,7 +54,13 @@ public class FontUtils {
 	private int[][] gradient = null;
 	private int[] fgcolor = null;
 	
-    // Returns the contents of the file in a byte array.
+	/**
+	   * Returns the contents of the file in a byte array.
+	   *
+	   * @param file the File object
+	   * 
+	   * @return byte[] The byte array
+	   */
     public static byte[] getBytesFromFile(File file) throws IOException {
         InputStream is = new FileInputStream(file);
     
@@ -81,6 +96,14 @@ public class FontUtils {
         return bytes;
     }
 
+    /**
+	   * Returns the contents of an input stream in a byte array.
+	   *
+	   * @param is the InputStream object
+	   * @param bufSize the buffer size (maximum stream size)
+	   * 
+	   * @return byte[] The byte array
+	   */
     public static byte[] getBytesFromInputStream(InputStream is, int bufSize) throws IOException {
 
         // Create the byte array to hold the data
@@ -103,6 +126,14 @@ public class FontUtils {
         is.close();
         return bytes;
     }
+    
+    /**
+	   * Loads a font by name from the /fonts/ resource
+	   *
+	   * @param fontname the font name
+	   * 
+	   * @return Font The Font object
+	   */
     static public Font loadfont(String fontname) {
 		
 		Font font = new Font();
@@ -184,6 +215,13 @@ public class FontUtils {
 		return font;
 	}
     
+    /**
+	   * Loads a font from a font file
+	   *
+	   * @param fontfile the font file name
+	   * 
+	   * @return Font The Font object
+	   */
     public Font loadfontobject(String fontfile) throws IOException, ClassNotFoundException {
     	FileInputStream fis;
     	fis = new FileInputStream(fontfile);
@@ -193,6 +231,14 @@ public class FontUtils {
     	return font;
     }
     
+    /**
+	   * Determine the width in pixels of the line of text
+	   *
+	   * @param line the line of text
+	   * @param font the font for rendering the text
+	   * @param intercharacter_space inter-character space
+	   * 
+	   */
 	public void get_line_dimensions(String line, Font font, float intercharacter_space) {
 		/*----------------------------------------------------------------------------
 		   Determine the width in pixels of the line of text line[] in the font
@@ -264,7 +310,14 @@ public class FontUtils {
 
 	}
 
-
+	/**
+	   * Compute width of resulting image
+	   *
+	   * @param lines the lines of text
+	   * @param font the font for rendering the text
+	   * @param intercharacter_space inter-character space
+	   * 
+	   */
 	public void compute_image_width(String [] lines, Font font, float intercharacter_space) {
 		maxwidth = 0;  /* initial value */
 		maxleftb = 0;  /* initial value */
@@ -277,6 +330,15 @@ public class FontUtils {
 		}
 	}
 
+	/**
+	   * Insert one character into the image bitmap
+	   *
+	   * @param glyph the Glyph for the character
+	   * @param toprow top left corner row
+	   * @param leftcol top left corner column
+	   * @param bits the image bitmap
+	   * 
+	   */
 	public void insert_character(Glyph glyph, int toprow, int leftcol, byte[] bits)	{
 		/*----------------------------------------------------------------------------
 		   Insert one character (whose glyph is 'glyph') into the image bits[].
@@ -310,6 +372,16 @@ public class FontUtils {
 		    }
 		}
 	
+	/**
+	   * Render the text into the image bitmap
+	   *
+	   * @param bits the image bitmap
+	   * @param lines the lines of text
+	   * @param font the font for rendering the text
+	   * @param topmargin the top margin
+	   * @param leftmargin the left margin
+	   * 
+	   */
 	public void insert_characters(byte[] bits, String[] lines, Font font,
 			int topmargin, int leftmargin) {
 		float intercharacter_space = (float) 0.0;
@@ -370,6 +442,14 @@ public class FontUtils {
         
 	}
 	
+	/**
+	   * Word-wrap a string into lines of specified width
+	   *
+	   * @param text the text to word-wrap
+	   * @param len the width in characters
+	   *
+	   * @return String [] the word-wrapped lines of text
+	   */
 	static String [] wrapText (String text, int len)
 	{
 	  // return empty array for null text
@@ -441,30 +521,64 @@ public class FontUtils {
 	  return ret;
 	}
 	
+	/**
+	   *
+	   * @return int computed columns (pixels)
+	   */
 	public int getCols() {
 		return cols;
 	}
 	
+	/**
+	   *
+	   * @return int computed rows (pixels)
+	   */
 	public int getRows() {
 		return rows;	
 	}
 
+	/**
+	   * Set background color/gradient
+	   *
+	   * @param gradient array of RGB color components
+	   */
 	public void setGradient(int[][] gradient) {
 		this.gradient = gradient;
 	}
 
+	/**
+	   *
+	   * @return int[][] current gradient array of RGB color components
+	   */
 	public int[][] getGradient() {
 		return gradient;
 	}
 
+	/**
+	   * Set foreground (text) color
+	   *
+	   * @param fgcolor RGB color components for font (foreground) color
+	   */
 	public void setFgcolor(int[] fgcolor) {
 		this.fgcolor = fgcolor;
 	}
 
+	/**
+	   *
+	   * @return int[] RGB color components for current foreground color
+	   */
 	public int[] getFgcolor() {
 		return fgcolor;
 	}
 
+	/**
+	   * render text into a bitmap
+	   *
+	   * @param inputText the text to render
+	   * @param fontname the name of the font to use
+	   *
+	   * @return byte[] the resulting BMP bitmap file data
+	   */
 	public synchronized byte[] doRender(String inputText, String fontname)
 			throws IOException {
         int info_len = 40;
@@ -607,6 +721,13 @@ public class FontUtils {
 
 	}
 	
+	/**
+	   * render text into a bitmap using default font
+	   *
+	   * @param inputText the text to render
+	   *
+	   * @return byte[] the resulting BMP bitmap file data
+	   */
 	public byte[] doRender(String inputText) throws IOException {
 		return doRender(inputText, "default");
 	}

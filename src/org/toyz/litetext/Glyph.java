@@ -2,6 +2,12 @@ package org.toyz.litetext;
 
 import java.io.Serializable;
 
+/**
+ * Bitmap character Glyph object
+ * 
+ * @author David Beckemeyer
+ *
+ */
 public class Glyph implements Serializable {
 
 	private static final long serialVersionUID = 1L;
